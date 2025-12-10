@@ -80,6 +80,6 @@ export const DrinkSearchProvider = ({ children }) => {
 
 export const useDrinkSearchContext = () => {
     const ctx = useContext(DrinkSearchContext);
-    if(!ctx) throw new Error("dude where's my context");
+    if(!ctx) throw new Error("Context not found");
     return ctx;
 }
