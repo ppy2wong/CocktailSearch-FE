@@ -14,7 +14,7 @@ export const DrinkSearchProvider = ({ children }) => {
 
 
     useEffect(() => {
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${selectedDrinkId}`)
+        fetch(`https://cocktailsearch-be.azurewebsites.net/api/GetFullCocktailRecipe?drinkId=${selectedDrinkId}`)
         .then(response => response.json())
         .then(data => { 
             if(data.drinks != null) {
@@ -42,20 +42,22 @@ export const DrinkSearchProvider = ({ children }) => {
     const handleSearchButtonClick = () => {
         setSearchCount(searchCount + 1);
 
+        let searchUrlBase = "https://cocktailsearch-be.azurewebsites.net/api";
+
         let searchUrl = "";
         switch(searchBy) {
             case "cocktail": 
-                searchUrl = "search.php?s="
+                searchUrl = "GetCocktailsByName?name="
                 break;
             case "ingredient":
-                searchUrl = "filter.php?i=";
+                searchUrl = "GetCocktailsByIngredient?ingredient=";
                 break;
             default:
-                searchUrl = "search.php?s=";
+                searchUrl = "GetCocktailsByName?name=";
                 break;
 
         }
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/${searchUrl}${searchString}`)
+        fetch(`${searchUrlBase}/${searchUrl}${searchString}`)
         .then(response => response.json())
         .then(data => { 
         setDrinks(data.drinks); 
